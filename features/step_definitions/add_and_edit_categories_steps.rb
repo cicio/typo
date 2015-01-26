@@ -21,13 +21,13 @@ Then /^I can add new Category$/ do
         Then I should see "CatOne"
 				}
 	  current_path.should == '/admin/categories/new'
-  
 				
 end
 
 Then /^I can edit Category$/ do
   get :edit, :id => 1
-  page.should have_link('/admin/categories/edit/1')
+	Factory(:category)
+  
 end
 
 When /^Category name is empty$/ do

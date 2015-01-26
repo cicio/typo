@@ -4,8 +4,9 @@ describe Admin::CategoriesController do
   render_views
 
   before(:each) do
-    Factory(:blog)
-    #TODO Delete after removing fixtures
+    @category = mock('category')
+		@category.id = 1
+		@category.name = 'CatOne'
     Profile.delete_all
     henri = Factory(:user, :login => 'henri', :profile => Factory(:profile_admin, :label => Profile::ADMIN))
     request.session = { :user => henri.id }
@@ -18,7 +19,7 @@ describe Admin::CategoriesController do
 
   describe "test_edit" do
     before(:each) do
-      get :edit, :id => Factory(:category).id
+      get :edit, :id => @category.id
     end
 
     it 'should render template new' do
