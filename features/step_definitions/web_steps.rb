@@ -34,19 +34,27 @@ World(WithinHelpers)
 Given /^the blog is set up$/ do
   Blog.default.update_attributes!({:blog_name => 'Teh Blag',
                                    :base_url => 'http://localhost:3000'});
-  Blog.default.save!
+  Blog.default.save!;
   User.create!({:login => 'admin',
                 :password => 'aaaaaaaa',
                 :email => 'joe@snow.com',
                 :profile_id => 1,
                 :name => 'admin',
+                :state => 'active'});
+
+  User.create!({:login => 'publisher',
+                :password => '12345678',
+                :email => 'bob@snow.com',
+                :profile_id => 2,
+                :name => 'publisher',
                 :state => 'active'})
 end
 
-And /^I am logged into the admin panel$/ do
+Given /^I am logged into the admin panel$/ do
   visit '/accounts/login'
   fill_in 'user_login', :with => 'admin'
   fill_in 'user_password', :with => 'aaaaaaaa'
+
   click_button 'Login'
   if page.respond_to? :should
     page.should have_content('Login successful')
@@ -54,6 +62,20 @@ And /^I am logged into the admin panel$/ do
     assert page.has_content?('Login successful')
   end
 end
+
+Given /^I am logged in as publisher$/ do
+  visit '/accounts/login'
+  fill_in 'user_login', :with => 'publisher'
+  fill_in 'user_password', :with => '12345678'
+  click_button 'Login'
+  if page.respond_to? :should
+    page.should have_content('Login successful')
+  else
+    assert page.has_content?('Login successful')
+  end
+end
+
+
 
 # Single-line step scoper
 When /^(.*) within (.*[^:])$/ do |step, parent|
@@ -83,6 +105,7 @@ end
 
 When /^(?:|I )fill in "([^"]*)" with "([^"]*)"$/ do |field, value|
   fill_in(field, :with => value)
+
 end
 
 When /^(?:|I )fill in "([^"]*)" for "([^"]*)"$/ do |value, field|

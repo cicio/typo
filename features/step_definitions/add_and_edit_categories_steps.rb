@@ -24,14 +24,24 @@ Then /^I can add new Category$/ do
 				
 end
 
-Then /^I can edit Category$/ do
-  get :edit, :id => 1
-	Factory(:category)
-  
-end
+#Then /^I can edit Category$/ do
+	#@cat = Category.new
+  #@cat.id = 3
+	#@cat.name = 'CatTwo'
+	#@cat.save!
+#  visit('/admin/categories/edit/1')
+#	steps %Q{ When I press "Save"}
+#  page.has_content?("Cassarola")  
+#end
 
 When /^Category name is empty$/ do
-  pending # express the regexp above with the code you wish you had
+  get :new
+  steps %Q{ 
+				When I fill in "category_name" with " "
+				And I press "Save"
+					}
+	raise ActiveRecord::RecordInvalid
+
 end
 
 Then /^I cannot save Category$/ do

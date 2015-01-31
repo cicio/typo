@@ -2,5 +2,8 @@
 <%= form_tag(form_action, :id => "#{form_type}_form", :enctype => "multipart/form-data", :class => className) do %>
 
   <%= render :partial => "form" %>
+<% end %>
 
+<% if current_user.admin? %>
+  <%= render :partial => 'admin/content/merge_with_form' %>
 <% end %>

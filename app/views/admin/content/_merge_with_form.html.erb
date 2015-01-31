@@ -1,0 +1,15 @@
+<div class='merge_articles'>
+	
+  <p><h3>Merge Articles</h3></p>
+
+  <%= form_tag :action => 'admin/content/merge_article', :method => 'post'  do %>
+  <div id = 'field_tag'>
+  <%= label_tag 'merge_with',  'Article ID' %>
+  <%= text_field_tag 'merge_with' %>
+  </div>   
+  <p>
+  <%= submit_tag 'Merge With This Article' %>
+  </p>
+  <% end %>
+</div>
+

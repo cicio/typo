@@ -112,6 +112,15 @@ class Admin::ContentController < Admin::BaseController
     end
     render :text => nil
   end
+  
+  def merge_article
+		if params[:merge_with]
+		  other_article_id = params[:merge_with]
+			@article = self.merge_with(params[:merge_with])
+		end
+		redirect_to :back and return
+  end
+
 
   protected
 
@@ -240,4 +249,6 @@ class Admin::ContentController < Admin::BaseController
   def setup_resources
     @resources = Resource.by_created_at
   end
+
+  
 end

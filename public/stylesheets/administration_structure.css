@@ -199,5 +199,19 @@ label.editor {
 	border-bottom: 1px solid #00438a;
 }
 
+.merge_articles {
+  float: left;
+  margin-right: 3px;
+  margin-bottom: 3px;
+}
+
+
+#merge_with {
+	display: inline-block;
+	float: left;
+  padding: 5px 8px;
+  margin-right: 10px;
+	margin-bottom: 3px;
+}
 
 
