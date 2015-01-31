@@ -607,6 +607,25 @@ describe Admin::ContentController do
       end
     end
 
+		describe 'merge_article' do
+			before :each do
+				@guest_article = Factory(:article, :body => 'Ipsum Facto 1')
+				@host_article = Factory(:article, :body => 'Verbatum Verbati')
+				@merged_article = Factory(:article, :body => 'Ipsum Facto 1 Verbatum Verbati')
+			end
+
+		  it 'should merge body of two articles that are different' do
+				@host_article.stub(:merge_with).with(@guest_article.id).and_return(@merged_article)
+				response.should be_success
+				@merged_article.body.should match 'Ipsum Facto 1 Verbatum Verbati'
+				get :edit, :article => {:id => @merged_article.id}
+			end
+
+			it 'should not perform merge operation for same article' do
+			
+			end
+		end
+
   end
 
   describe 'with publisher connection' do

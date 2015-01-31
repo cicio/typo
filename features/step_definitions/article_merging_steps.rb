@@ -4,8 +4,19 @@ Given /^the following articles exist:$/ do |table|
 	end
 end
 
-Given /^I am logged in as publisher$/ do
-  visit '/accounts/login'
-  @user = User.find_by_name('publisher')
-  
+When /^I edit "([^"].+)"$/ do |article|
+	@article = Article.find_by_title(article)
+	visit("/admin/content/edit/#{@article.id}")
+	current_path.should match("/admin/content/edit/#{@article.id}")
 end
+
+
+Then /^the article "(.*?)" should have body "(.*?)"$/ do |title, body|
+  Article.find_by_title(title).body.should eq body
+end
+
+And /^I should see "([^"].+?)" button$/ do |btn|
+  page.has_button?(btn)
+
+end
+

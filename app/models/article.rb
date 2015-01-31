@@ -416,6 +416,21 @@ class Article < Content
     user.admin? || user_id == user.id
   end
 
+  def merge_with(other_article_id)
+		unless self.id && Article.find_by_id(other_article_id)
+			raise  "Error, enter a valid Article ID to merge, or edit a valid article"
+		end
+    unless self.id != other_article_id
+      raise "Error, article cannot be merged with itself, enter a valid and distinct article id"
+    end
+		other_article = Article.find_by_id(other_article_id)
+		merged_article = Article.new(self)
+    merged_article.body << other_article.body
+		@article = merged_article
+  end
+
+
+
   protected
 
   def set_published_at
@@ -466,4 +481,5 @@ class Article < Content
     to = to - 1 # pull off 1 second so we don't overlap onto the next day
     return from..to
   end
+
 end
